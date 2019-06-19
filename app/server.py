@@ -64,7 +64,9 @@ async def analyze(request):
     img = open_image(BytesIO(img_bytes))
     <!-- prediction = learn.predict(img)[0] -->
     prediction = learn.predict(img)
-    return JSONResponse({'result': str(prediction)})
+    preds = prediction.split(';')
+    result_phrase = "The hat you provided appears to be: " + str(preds)
+    return JSONResponse({'result': str(result_phrase)})
 
 
 if __name__ == '__main__':
