@@ -62,17 +62,15 @@ async def analyze(request):
     img_data = await request.form()
     img_bytes = await (img_data['file'].read())
     img = open_image(BytesIO(img_bytes))
-    # prediction = learn.predict(img)
+    prediction = learn.predict(img)
     #preds = prediction.split(';')
     #if len(preds) > 1:
      #   pred_phrase = ", ".join(preds)
     #else: 
      #   pred_phrase = preds[0]
-    #result_phrase = "The hat you provided appears to be: " + pred_phrase + "."
-    # return JSONResponse({'result': result_phrase})
-    return JSONResponse({'result': learn.predict(img)})
-
-
+    result_phrase = "The hat you provided appears to be: " + prediction + "."
+    return JSONResponse({'result': result_phrase})
+    
 if __name__ == '__main__':
     if 'serve' in sys.argv:
         uvicorn.run(app=app, host='0.0.0.0', port=5000, log_level="info")
