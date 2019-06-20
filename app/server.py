@@ -63,7 +63,7 @@ async def analyze(request):
     img_bytes = await (img_data['file'].read())
     img = open_image(BytesIO(img_bytes))
     prediction = learn.predict(img)
-    pred_phrase = ", ".join(preds)
+    pred_phrase = ", ".join(prediction)
     #preds = prediction.split(';')
     #if len(preds) > 1:
      #   pred_phrase = ", ".join(preds)
