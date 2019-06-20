@@ -63,8 +63,7 @@ async def analyze(request):
     img_bytes = await (img_data['file'].read())
     img = open_image(BytesIO(img_bytes))
     prediction = learn.predict(img)[0]
-    result_phrase = "The hat you provided appears to be: " + prediction + "."
-    return JSONResponse({'result': result_phrase})
+    return JSONResponse({'result': prediction})
     
 if __name__ == '__main__':
     if 'serve' in sys.argv:
