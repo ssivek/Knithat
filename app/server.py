@@ -63,7 +63,14 @@ async def analyze(request):
     img_bytes = await (img_data['file'].read())
     img = open_image(BytesIO(img_bytes))
     prediction = learn.predict(img)[0]
-    return JSONResponse({'result': str(prediction)})
+    a = str(prediction)
+    b = a.split(',')
+    c = b[0]
+    d = c.split(' ')
+    e = d[1:]
+    custom_search = '%2B'.join(e)
+    url_all = 'https://www.ravelry.com/patterns/search#craft=knitting&photo=yes&pc=hat&sort=best&view=captioned_thumbs&ratings=5&pa=' + custom_search
+    return JSONResponse({'result': str(url_all)})
     
 if __name__ == '__main__':
     if 'serve' in sys.argv:
