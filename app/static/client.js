@@ -29,7 +29,8 @@ function analyze() {
   xhr.onload = function(e) {
     if (this.readyState === 4) {
       var response = JSON.parse(e.target.responseText);
-      el("result-label").innerHTML = `The hat you provided appears to be: ${response["result"]}`;
+      el("result-label").innerHTML = `Try these patterns:`;
+      el("result_label_url").setAttribute('href', response["result"])
     }
     el("analyze-button").innerHTML = "Analyze";
   };
