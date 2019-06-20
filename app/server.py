@@ -62,14 +62,15 @@ async def analyze(request):
     img_data = await request.form()
     img_bytes = await (img_data['file'].read())
     img = open_image(BytesIO(img_bytes))
-    prediction = learn.predict(img)[0]
-    a = str(prediction)
-    b = a.split(',')
-    c = b[0]
-    d = c.split(' ')
-    e = d[1:]
-    custom_search = '%2B'.join(e)
-    url_all = 'https://www.ravelry.com/patterns/search#craft=knitting&photo=yes&pc=hat&sort=best&view=captioned_thumbs&ratings=5&pa=' + custom_search
+    prediction = learn.predict(img) #[0] # returns "(MultiCategory ribbed, tensor([0., 0., 0...."
+    a = str(prediction) # makes list from prediction into a string
+    b = a.split(',') # splits string on the commas
+    c = b[0] # extracts first item out of string "(MultiCategory ribbed"
+    d = c.split(' ') # splits item(s) on the space
+    e = d[1:] # extracts the second and all following items, which are pattern attributes
+    custom_search = '%2B'.join(e) # constructs string from pattern attributes in e, joining with '%2B' for Ravelry search
+    search_url = 'https://www.ravelry.com/patterns/search#craft=knitting&photo=yes&pc=hat&sort=best&view=captioned_thumbs&ratings=5&pa='
+    url_all =  search_url + custom_search # concatenates start of search URL with custom attributes joined as string
     return JSONResponse({'result': str(url_all)})
     
 if __name__ == '__main__':
