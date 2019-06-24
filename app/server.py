@@ -121,7 +121,7 @@ async def analyze(request):
         patt_3 = {'info': p_info_3, 'link': p_link_3, 'photo': p_photo_3, 'free': p_free_3}
         patt_recs = [patt_1, patt_2, patt_3] # list of dicts of patterns
 
-        return render_template('pattern-search.html', JSONResponse({'patt_recs': patt_recs))
+        return render_template('pattern-search.html', JSONResponse({'patt_recs': patt_recs})
 
     except rq.exceptions.HTTPError:
         return "Error: " + str(err)
