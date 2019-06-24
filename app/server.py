@@ -1,9 +1,9 @@
-import config
 import aiohttp
 import asyncio
 import uvicorn
 import requests as rq
 import json
+import os
 from fastai import *
 from fastai.vision import *
 from io import BytesIO
@@ -15,8 +15,8 @@ from starlette.staticfiles import StaticFiles
 export_file_url = 'https://www.dropbox.com/s/kmgcoaqbfo76kbt/export.pkl?dl=1'
 export_file_name = 'export.pkl'
 
-user = config.user
-pswd = config.pswd
+user = os.getenv(user)
+pswd = os.getenv(pswd)
 
 classes = ['felted', 'tassel', 'stripes', 'bobble-or-popcorn', 'cables', 'eyelets', 'lace', 'ribbed', 
     'slipped-stitches', 'textured', 'twisted-stitches', 'fairisle', 'stranded', 'appliqued', 
@@ -82,7 +82,7 @@ async def analyze(request):
     
     # make request and parse out results
     try:
-        response = rq.get(api_url, auth=(user,pswd))
+        response = rq.get(api_url, auth=(user, pswd))
         json_data = response.json()
 
         # info on first search result
