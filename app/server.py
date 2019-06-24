@@ -87,39 +87,8 @@ async def analyze(request):
     # make request and parse out results
     try:
         response = rq.get(api_url, auth=(user, pswd))
-        json_data = response.json()
-
-        # info on first search result
-        p_info_1 = json_data['patterns'][0]['name'] + ' by ' + json_data['patterns'][0]['pattern_author']['name']
-        p_link_1 = 'https://www.ravelry.com/patterns/library/' + json_data['patterns'][0]['permalink']
-        p_photo_1 = json_data['patterns'][0]['first_photo']['square_url']
-        if json_data['patterns'][0]['free'] == True:
-            p_free_1 = 'Free pattern? Yes'
-        else:   
-            p_free_1 = 'Free pattern? No'
-
-        #info on second search result
-        p_info_2 = json_data['patterns'][1]['name'] + ' by ' + json_data['patterns'][1]['pattern_author']['name']
-        p_link_2 = 'https://www.ravelry.com/patterns/library/' + json_data['patterns'][1]['permalink']
-        p_photo_2 = json_data['patterns'][1]['first_photo']['square_url']
-        if json_data['patterns'][1]['free'] == True:
-            p_free_2 = 'Free pattern? Yes'
-        else:   
-            p_free_2 = 'Free pattern? No'
-
-        # info on third search result
-        p_info_3 = json_data['patterns'][2]['name'] + ' by ' + json_data['patterns'][2]['pattern_author']['name']
-        p_link_3 = 'https://www.ravelry.com/patterns/library/' + json_data['patterns'][2]['permalink']
-        p_photo_3 = json_data['patterns'][2]['first_photo']['square_url']
-        if json_data['patterns'][2]['free'] == True:
-            p_free_3 = 'Free pattern? Yes'
-        else:   
-            p_free_3 = 'Free pattern? No'
-            
-        return templates.TemplateResponse('pattern-search.html', p_info_1 = p_info_1, p_link_1 = p_link_1, p_photo_1 = p_photo_1,
-            p_free_1 = p_free_1, p_info_2 = p_info_2, p_link_2 = p_link_2, p_photo_2 = p_photo_2, p_free_2 = p_free_2, 
-            p_info_3 = p_info_3, p_link_3 = p_link_3, p_photo_3 = p_photo_3, p_free_3 = p_free_3)
-        
+        pattern_recs = response.json()
+        return templates.TemplateResponse('pattern-search.html', items=pattern_recs} 
 
     except rq.exceptions.HTTPError:
         return "Error: " + str(err)
