@@ -1,6 +1,9 @@
+import config
 import aiohttp
 import asyncio
 import uvicorn
+import requests as rq
+import json
 from fastai import *
 from fastai.vision import *
 from io import BytesIO
@@ -12,7 +15,10 @@ from starlette.staticfiles import StaticFiles
 export_file_url = 'https://www.dropbox.com/s/kmgcoaqbfo76kbt/export.pkl?dl=1'
 export_file_name = 'export.pkl'
 
-classes = classes = ['felted', 'tassel', 'stripes', 'bobble-or-popcorn', 'cables', 'eyelets', 'lace', 'ribbed', 
+user = config.user
+pswd = config.pswd
+
+classes = ['felted', 'tassel', 'stripes', 'bobble-or-popcorn', 'cables', 'eyelets', 'lace', 'ribbed', 
     'slipped-stitches', 'textured', 'twisted-stitches', 'fairisle', 'stranded', 'appliqued', 
     'norwegian']
 path = Path(__file__).parent
@@ -50,7 +56,6 @@ tasks = [asyncio.ensure_future(setup_learner())]
 learn = loop.run_until_complete(asyncio.gather(*tasks))[0]
 loop.close()
 
-
 @app.route('/')
 async def homepage(request):
     html_file = path / 'view' / 'index.html'
@@ -63,16 +68,57 @@ async def analyze(request):
     img_bytes = await (img_data['file'].read())
     img = open_image(BytesIO(img_bytes))
     prediction = learn.predict(img) #[0] # returns "(MultiCategory ribbed, tensor([0., 0., 0...."
+    
+    # transform prediction into API call to Ravelry using detected pattern attributes
     a = str(prediction) # makes list from prediction into a string
     b = a.split(',') # splits string on the commas
     c = b[0] # extracts first item out of string "(MultiCategory ribbed"
     d = c.split(' ') # splits item(s) on the space
     e = d[1:] # extracts the second and all following items, which are pattern attributes
-    custom_search = '%2B'.join(e) # constructs string from pattern attributes in e, joining with '%2B' for Ravelry search
-    search_url = 'https://www.ravelry.com/patterns/search#craft=knitting&photo=yes&pc=hat&sort=best&view=captioned_thumbs&ratings=5&pa='
-    url_all =  search_url + custom_search # concatenates start of search URL with custom attributes joined as string
-    return JSONResponse({'result': str(url_all)})
+    f = e.split(';') # splits item(s) on the semicolon
+    pattern_attributes = '&pa=' + '%2B'.join(f) # joins pattern attributes to add to API call string
+    params = '&' + pattern_attributes # + user_input if/when user input options eventually exist!
+    api_url = str('https://api.ravelry.com/patterns/search.json?craft=knitting&photo=yes&pc=hat&sort=best&ratings=5&page=1' + str(params))
     
+    # make request and parse out results
+    try:
+        response = rq.get(api_url, auth=(user,pswd))
+        json_data = response.json()
+
+        # info on first search result
+        p_info_1 = json_data['patterns'][0]['name'] + ' by ' + json_data['patterns'][0]['pattern_author']['name']
+        p_link_1 = 'https://www.ravelry.com/patterns/library/' + json_data['patterns'][0]['permalink']
+        p_photo_1 = json_data['patterns'][0]['first_photo']['square_url']
+        if json_data['patterns'][0]['free'] == True:
+            p_free_1 = 'Free pattern? Yes'
+        else:   
+            p_free_1 = 'Free pattern? No'
+
+        #info on second search result
+        p_info_2 = json_data['patterns'][1]['name'] + ' by ' + json_data['patterns'][1]['pattern_author']['name']
+        p_link_2 = 'https://www.ravelry.com/patterns/library/' + json_data['patterns'][1]['permalink']
+        p_photo_2 = json_data['patterns'][1]['first_photo']['square_url']
+        if json_data['patterns'][1]['free'] == True:
+            p_free_2 = 'Free pattern? Yes'
+        else:   
+            p_free_2 = 'Free pattern? No'
+
+        # info on third search result
+        p_info_3 = json_data['patterns'][2]['name'] + ' by ' + json_data['patterns'][2]['pattern_author']['name']
+        p_link_3 = 'https://www.ravelry.com/patterns/library/' + json_data['patterns'][2]['permalink']
+        p_photo_3 = json_data['patterns'][2]['first_photo']['square_url']
+        if json_data['patterns'][2]['free'] == True:
+            p_free_3 = 'Free pattern? Yes'
+        else:   
+            p_free_3 = 'Free pattern? No'
+            
+        return render_template('pattern-search.html', p_info_1 = p_info_1, p_link_1 = p_link_1, p_photo_1 = p_photo_1,
+            p_free_1 = p_free_1, p_info_2 = p_info_2, p_link_2 = p_link_2, p_photo_2 = p_photo_2, p_free_2 = p_free_2, 
+            p_info_3 = p_info_3, p_link_3 = p_link_3, p_photo_3 = p_photo_3, p_free_3 = p_free_3)
+    except: 
+        rq.exceptions.HTTPError as err:
+        return "Error: " + str(err)
+
 if __name__ == '__main__':
     if 'serve' in sys.argv:
         uvicorn.run(app=app, host='0.0.0.0', port=5000, log_level="info")
