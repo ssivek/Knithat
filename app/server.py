@@ -15,8 +15,8 @@ from starlette.staticfiles import StaticFiles
 export_file_url = 'https://www.dropbox.com/s/kmgcoaqbfo76kbt/export.pkl?dl=1'
 export_file_name = 'export.pkl'
 
-user = os.getenv(user)
-pswd = os.getenv(pswd)
+user = os.getenv('user')
+pswd = os.getenv('pswd')
 
 classes = ['felted', 'tassel', 'stripes', 'bobble-or-popcorn', 'cables', 'eyelets', 'lace', 'ribbed', 
     'slipped-stitches', 'textured', 'twisted-stitches', 'fairisle', 'stranded', 'appliqued', 
