@@ -19,17 +19,21 @@
     <div class='pattern-info'>
         <p>Here are the three top Ravelry search results with styles similar to your uploaded image.</p>
         <p>All of these patterns are rated 5 stars on Ravelry!</p>
-        <br>
-        <img src = "{{p_photo_1}}" alt="Hat Pattern 1" height="240" width="240">
-        <a href " " id='p_link_1'>{{p_info_1}}</a>
-        {{p_free_1}}
-        <br>
-        <img src = "{{p_photo_2}}" alt="Hat Pattern 2" height="240" width="240">
-        <a href " " id='p_link_2'>{{p_info_2}}</a>
-        {{p_free_2}}
-        <br>
-        <img src = "{{p_photo_3}}" alt="Hat Pattern 3" height="240" width="240">
-        <a href " " id='p_link_3'>{{p_info_3}}</a>
-        {{p_free_3}}
+        
+        <br> <!-- pattern 1 results-->
+        <img src=" " alt="Hat Pattern 1" height="240" width="240">{{patt_recs[0]['photo']}} <!-- show the image -->
+        <a href=" ">{{patt_recs[0]['link']}}{{patt_recs[0]['info']}}</a> <!-- pattern name and author as link to pattern -->
+        {{patt_recs[0]['free']}}
+        
+        <br> <!-- pattern 2 results-->
+        <img src=" " alt="Hat Pattern 2" height="240" width="240">{{patt_recs[1]['photo']}} <!-- show the image -->
+        <a href=" ">{{patt_recs[1]['link']}}{{patt_recs[1]['info']}}</a> <!-- pattern name and author as link to pattern -->
+        {{patt_recs[1]['free']}}
+
+        <br> <!-- pattern 3 results-->
+        <img src=" " alt="Hat Pattern 3" height="240" width="240">{{patt_recs[2]['photo']}} <!-- show the image -->
+        <a href=" ">{{patt_recs[2]['link']}}{{patt_recs[2]['info']}}</a> <!-- pattern name and author as link to pattern -->
+        {{patt_recs[2]['free']}}
+
     </div>
 </body>
