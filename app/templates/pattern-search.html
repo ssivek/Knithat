@@ -1,0 +1,35 @@
+<html lang='en'>
+<head>
+  <meta charset='utf-8'>
+  <link rel='stylesheet' href='./static/style.css'>
+  <link href="https://fonts.googleapis.com/css?family=Gochi+Hand&display=swap" rel="stylesheet">
+  <script src='./static/client.js'></script>
+</head>
+<body>
+<div>
+  <div class='center'>
+    <div class='title'>KnitHAT's Pattern Ideas</div>
+    <p>
+      Thanks for trying out KnitHAT!
+    </p>
+    <p>You uploaded:</p>
+      <div>
+        <img id='image-picked' class='no-display' alt='Chosen Image' height='200'>
+      </div>
+    <div class='pattern-info'>
+        <p>Here are the three top Ravelry search results with styles similar to your uploaded image.</p>
+        <p>All of these patterns are rated 5 stars on Ravelry!</p>
+        <br>
+        <img src = "{{p_photo_1}}" alt="Hat Pattern 1" height="240" width="240">
+        <a href " " id='p_link_1'>{{p_info_1}}</a>
+        {{p_free_1}}
+        <br>
+        <img src = "{{p_photo_2}}" alt="Hat Pattern 2" height="240" width="240">
+        <a href " " id='p_link_2'>{{p_info_2}}</a>
+        {{p_free_2}}
+        <br>
+        <img src = "{{p_photo_3}}" alt="Hat Pattern 3" height="240" width="240">
+        <a href " " id='p_link_3'>{{p_info_3}}</a>
+        {{p_free_3}}
+    </div>
+</body>
