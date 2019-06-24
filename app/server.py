@@ -4,14 +4,17 @@ import uvicorn
 import requests as rq
 import json
 import os
-from flask import Flask, render_template
+# from flask import Flask, render_template
 from fastai import *
 from fastai.vision import *
 from io import BytesIO
 from starlette.applications import Starlette
 from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import HTMLResponse, JSONResponse
+from starlette.templating import Jinja2Templates # this is new
 from starlette.staticfiles import StaticFiles
+
+templates = Jinja2Templates(directory='templates')
 
 export_file_url = 'https://www.dropbox.com/s/kmgcoaqbfo76kbt/export.pkl?dl=1'
 export_file_name = 'export.pkl'
@@ -113,9 +116,11 @@ async def analyze(request):
         else:   
             p_free_3 = 'Free pattern? No'
             
-        return render_template('pattern-search.html', p_info_1 = p_info_1, p_link_1 = p_link_1, p_photo_1 = p_photo_1,
+        return templates.TemplateResponse('pattern-search.html', p_info_1 = p_info_1, p_link_1 = p_link_1, p_photo_1 = p_photo_1,
             p_free_1 = p_free_1, p_info_2 = p_info_2, p_link_2 = p_link_2, p_photo_2 = p_photo_2, p_free_2 = p_free_2, 
             p_info_3 = p_info_3, p_link_3 = p_link_3, p_photo_3 = p_photo_3, p_free_3 = p_free_3)
+        
+
     except rq.exceptions.HTTPError:
         return "Error: " + str(err)
 
