@@ -85,47 +85,47 @@ async def analyze(request):
     api_url = str('https://api.ravelry.com/patterns/search.json?craft=knitting&photo=yes&pc=hat&sort=best&ratings=5&page=1' + str(params))
     
     # make request and parse out results
-    try:
-        response = rq.get(api_url, auth=(user, pswd))
-        json_data = response.json()
-        
-        # info on first search result
-        p_info_1 = json_data['patterns'][0]['name'] + ' by ' + json_data['patterns'][0]['pattern_author']['name']
-        p_link_1 = 'https://www.ravelry.com/patterns/library/' + json_data['patterns'][0]['permalink']
-        p_photo_1 = json_data['patterns'][0]['first_photo']['square_url']
-        if json_data['patterns'][0]['free'] == True:
-            p_free_1 = 'Free pattern? Yes'
-        else:   
-            p_free_1 = 'Free pattern? No'
+    #try:
+    response = rq.get(api_url, auth=(user, pswd))
+    json_data = response.json()
+    
+    # info on first search result
+    p_info_1 = json_data['patterns'][0]['name'] + ' by ' + json_data['patterns'][0]['pattern_author']['name']
+    p_link_1 = 'https://www.ravelry.com/patterns/library/' + json_data['patterns'][0]['permalink']
+    p_photo_1 = json_data['patterns'][0]['first_photo']['square_url']
+    if json_data['patterns'][0]['free'] == True:
+        p_free_1 = 'Free pattern? Yes'
+    else:   
+        p_free_1 = 'Free pattern? No'
 
-        #info on second search result
-        p_info_2 = json_data['patterns'][1]['name'] + ' by ' + json_data['patterns'][1]['pattern_author']['name']
-        p_link_2 = 'https://www.ravelry.com/patterns/library/' + json_data['patterns'][1]['permalink']
-        p_photo_2 = json_data['patterns'][1]['first_photo']['square_url']
-        if json_data['patterns'][1]['free'] == True:
-            p_free_2 = 'Free pattern? Yes'
-        else:   
-            p_free_2 = 'Free pattern? No'
+    #info on second search result
+    p_info_2 = json_data['patterns'][1]['name'] + ' by ' + json_data['patterns'][1]['pattern_author']['name']
+    p_link_2 = 'https://www.ravelry.com/patterns/library/' + json_data['patterns'][1]['permalink']
+    p_photo_2 = json_data['patterns'][1]['first_photo']['square_url']
+    if json_data['patterns'][1]['free'] == True:
+        p_free_2 = 'Free pattern? Yes'
+    else:   
+        p_free_2 = 'Free pattern? No'
 
-        # info on third search result
-        p_info_3 = json_data['patterns'][2]['name'] + ' by ' + json_data['patterns'][2]['pattern_author']['name']
-        p_link_3 = 'https://www.ravelry.com/patterns/library/' + json_data['patterns'][2]['permalink']
-        p_photo_3 = json_data['patterns'][2]['first_photo']['square_url']
-        if json_data['patterns'][2]['free'] == True:
-            p_free_3 = 'Free pattern? Yes'
-        else:   
-            p_free_3 = 'Free pattern? No'
-        
-        patt_1 = {'info': p_info_1, 'link': p_link_1, 'photo': p_photo_1, 'free': p_free_1} # dictionary for each of top 3 patterns
-        patt_2 = {'info': p_info_2, 'link': p_link_2, 'photo': p_photo_2, 'free': p_free_2}
-        patt_3 = {'info': p_info_3, 'link': p_link_3, 'photo': p_photo_3, 'free': p_free_3}
-        patt_recs = [patt_1, patt_2, patt_3] # list of dicts of patterns
+    # info on third search result
+    p_info_3 = json_data['patterns'][2]['name'] + ' by ' + json_data['patterns'][2]['pattern_author']['name']
+    p_link_3 = 'https://www.ravelry.com/patterns/library/' + json_data['patterns'][2]['permalink']
+    p_photo_3 = json_data['patterns'][2]['first_photo']['square_url']
+    if json_data['patterns'][2]['free'] == True:
+        p_free_3 = 'Free pattern? Yes'
+    else:   
+        p_free_3 = 'Free pattern? No'
+    
+    patt_1 = {'info': p_info_1, 'link': p_link_1, 'photo': p_photo_1, 'free': p_free_1} # dictionary for each of top 3 patterns
+    patt_2 = {'info': p_info_2, 'link': p_link_2, 'photo': p_photo_2, 'free': p_free_2}
+    patt_3 = {'info': p_info_3, 'link': p_link_3, 'photo': p_photo_3, 'free': p_free_3}
+    patt_recs = [patt_1, patt_2, patt_3] # list of dicts of patterns
 
-        return render_template('pattern-search.html', JSONResponse({'patt_recs': patt_recs})
+    return render_template('pattern-search.html', JSONResponse({'patt_recs': patt_recs})
 
-    except rq.exceptions.HTTPError:
-        return "Error: " + str(err)
+    #except rq.exceptions.HTTPError:
+        #   return "Error: " + str(err)
 
 if __name__ == '__main__':
-    if 'serve' in sys.argv:
+if 'serve' in sys.argv:
         uvicorn.run(app=app, host='0.0.0.0', port=5000, log_level="info")
