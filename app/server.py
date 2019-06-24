@@ -115,8 +115,7 @@ async def analyze(request):
         return render_template('pattern-search.html', p_info_1 = p_info_1, p_link_1 = p_link_1, p_photo_1 = p_photo_1,
             p_free_1 = p_free_1, p_info_2 = p_info_2, p_link_2 = p_link_2, p_photo_2 = p_photo_2, p_free_2 = p_free_2, 
             p_info_3 = p_info_3, p_link_3 = p_link_3, p_photo_3 = p_photo_3, p_free_3 = p_free_3)
-    except: 
-        rq.exceptions.HTTPError as err:
+    except rq.exceptions.HTTPError:
         return "Error: " + str(err)
 
 if __name__ == '__main__':
