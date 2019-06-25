@@ -11,7 +11,7 @@ from io import BytesIO
 from starlette.applications import Starlette
 from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import HTMLResponse, JSONResponse
-from starlette.templating import Jinja2Templates # this is new
+from starlette.templating import Jinja2Templates 
 from starlette.staticfiles import StaticFiles
 
 templates = Jinja2Templates(directory='templates')
@@ -71,7 +71,7 @@ async def analyze(request):
     img_data = await request.form()
     img_bytes = await (img_data['file'].read())
     img = open_image(BytesIO(img_bytes))
-    prediction = learn.predict(img) #[0] # returns "(MultiCategory ribbed;cables, tensor([0., 0., 0...."
+    prediction = learn.predict(img) # returns "(MultiCategory ribbed;cables, tensor([0., 0., 0...."
     
     # transform prediction into API call to Ravelry using detected pattern attributes
     a = str(prediction) # makes list from prediction into a string
@@ -85,7 +85,6 @@ async def analyze(request):
     api_url = str('https://api.ravelry.com/patterns/search.json?craft=knitting&photo=yes&pc=hat&sort=best&ratings=5&page=1' + str(params))
     
     # make request and parse out results
-    #try:
     response = rq.get(api_url, auth=(user, pswd))
     json_data = response.json()
     
@@ -119,13 +118,11 @@ async def analyze(request):
     patt_1 = {'info': p_info_1, 'link': p_link_1, 'photo': p_photo_1, 'free': p_free_1} # dictionary for each of top 3 patterns
     patt_2 = {'info': p_info_2, 'link': p_link_2, 'photo': p_photo_2, 'free': p_free_2}
     patt_3 = {'info': p_info_3, 'link': p_link_3, 'photo': p_photo_3, 'free': p_free_3}
-    patt_recs = [patt_1, patt_2, patt_3] # list of dicts of patterns
+    patt_lst = [patt_1, patt_2, patt_3] # list of dicts of patterns
+    patt_recs = json.dumps(patt_lst)
 
     return render_template('pattern-search.html', JSONResponse({'patt_recs': patt_recs})
 
-    #except rq.exceptions.HTTPError:
-        #   return "Error: " + str(err)
-
-# if __name__ == '__main__':
-  #  if 'serve' in sys.argv:
-   #     uvicorn.run(app=app, host='0.0.0.0', port=5000, log_level="info")
+if __name__ == '__main__':
+    if 'serve' in sys.argv:
+        uvicorn.run(app=app, host='0.0.0.0', port=5000, log_level="info")
