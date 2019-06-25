@@ -72,6 +72,7 @@ async def analyze(request):
     prediction = learn.predict(img)
     json_data = get_api_call(prediction)
     patt_recs = extract_pattern_info(json_data)
+    print(patt_recs)
     return JSONResponse({'result': patt_recs})
 
 
