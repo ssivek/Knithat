@@ -121,7 +121,7 @@ async def analyze(request):
     patt_lst = [patt_1, patt_2, patt_3] # list of dicts of patterns
     patt_recs = json.dumps(patt_lst)
 
-    return render_template('pattern-search.html', JSONResponse({'patt-recs': patt-recs}))
+    return render_template('pattern-search.html', JSONResponse({'patt-recs': patt_recs}))
 
 if __name__ == "__main__":
     if "serve" in sys.argv:
