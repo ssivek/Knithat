@@ -31,10 +31,10 @@ function analyze() {
         var response = JSON.parse(e.target.responseText);
         el('result-label').innerHTML = `
         Result in ugly format: <br>${response['result']}
-        <br>Try for a pattern name:  ${response['result'][0]['info']}
-        <br>And a link:  ${response['result'][0]['link']}
-        <br>And a photo URL: ${response['result'][0]['photo']}
-        <br>And a free indicator: ${response['result'][0]['free']}
+        <br>Try for a pattern name:  ${response['result'][0].info}
+        <br>And a link:  ${response['result'][0].link}
+        <br>And a photo URL: ${response['result'][0].photo}
+        <br>And a free indicator: ${response['result'][0].free}
         <br>Happy knitting!<br>
         `;
     }
