@@ -25,23 +25,14 @@ function analyze() {
     true);
   xhr.onerror = function() {
     alert(xhr.responseText);
-  }
-
+  };
   xhr.onload = function(e) {
     if (this.readyState === 4) {
         var response = JSON.parse(e.target.responseText);
-        el('result-label').innerHTML = `<br>${response['patt_recs']}
-        <br>Here are the three top Ravelry search results of types similar to your uploaded image.<br>
-        <br>
-        ${response['patt_recs'][0]['info']}
-        ${response['patt_recs'][0]['link']}
-        ${response['patt_recs'][0]['free']}
-        <br>
-        <br>
-        Happy Knitting! 👍`.bold();
+        el('result-label').innerHTML = `Result in ugly format: <br>${response['result']}`;
     }
-    el('analyze-button').innerHTML = 'Get Another Hat!'.bold();
-}
+    el('analyze-button').innerHTML = 'Analyze';
+};
 
   var fileData = new FormData();
   fileData.append("file", uploadFiles[0]);
