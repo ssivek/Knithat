@@ -1,20 +1,16 @@
 import aiohttp
 import asyncio
 import uvicorn
+
 import requests as rq
-import json
-import os
-from flask import Flask, render_template
+
 from fastai import *
 from fastai.vision import *
 from io import BytesIO
 from starlette.applications import Starlette
 from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import HTMLResponse, JSONResponse
-from starlette.templating import Jinja2Templates 
 from starlette.staticfiles import StaticFiles
-
-templates = Jinja2Templates(directory='templates')
 
 export_file_url = 'https://www.dropbox.com/s/kmgcoaqbfo76kbt/export.pkl?dl=1'
 export_file_name = 'export.pkl'
@@ -25,6 +21,7 @@ pswd = os.getenv('pswd')
 classes = ['felted', 'tassel', 'stripes', 'bobble-or-popcorn', 'cables', 'eyelets', 'lace', 'ribbed', 
     'slipped-stitches', 'textured', 'twisted-stitches', 'fairisle', 'stranded', 'appliqued', 
     'norwegian']
+
 path = Path(__file__).parent
 
 app = Starlette()
@@ -60,6 +57,7 @@ tasks = [asyncio.ensure_future(setup_learner())]
 learn = loop.run_until_complete(asyncio.gather(*tasks))[0]
 loop.close()
 
+
 @app.route('/')
 async def homepage(request):
     html_file = path / 'view' / 'index.html'
@@ -71,8 +69,14 @@ async def analyze(request):
     img_data = await request.form()
     img_bytes = await (img_data['file'].read())
     img = open_image(BytesIO(img_bytes))
-    prediction = learn.predict(img) # returns "(MultiCategory ribbed;cables, tensor([0., 0., 0...."
-    
+    prediction = learn.predict(img)
+    json_data = get_api_call(prediction)
+    patt_recs = extract_pattern_info(json_data)
+    return JSONResponse({'result': patt_recs})
+
+
+
+def get_api_call(prediction):
     # transform prediction into API call to Ravelry using detected pattern attributes
     a = str(prediction) # makes list from prediction into a string
     b = a.split(',') # splits string on the commas
@@ -83,11 +87,14 @@ async def analyze(request):
     pattern_attributes = '&pa=' + '%2B'.join(e) # joins pattern attributes to add to API call string
     params = '&' + pattern_attributes # + user_input if/when user input options eventually exist!
     api_url = str('https://api.ravelry.com/patterns/search.json?craft=knitting&photo=yes&pc=hat&sort=best&ratings=5&page=1' + str(params))
-    
+   
     # make request and parse out results
     response = rq.get(api_url, auth=(user, pswd))
     json_data = response.json()
-    
+    return json_data
+
+
+def extract_pattern_info(json_data):
     # info on first search result
     p_info_1 = json_data['patterns'][0]['name'] + ' by ' + json_data['patterns'][0]['pattern_author']['name']
     p_link_1 = 'https://www.ravelry.com/patterns/library/' + json_data['patterns'][0]['permalink']
@@ -121,10 +128,7 @@ async def analyze(request):
     patt_lst = [patt_1, patt_2, patt_3] # list of dicts of patterns
     patt_recs = json.dumps(patt_lst)
 
-    # return render_template('pattern-search.html', patt_recs=patt_recs)
 
-    return templates.TemplateResponse('pattern-search.html', patt_recs=patt_recs)
-
-if __name__ == "__main__":
-    if "serve" in sys.argv:
+if __name__ == '__main__':
+    if 'serve' in sys.argv:
         uvicorn.run(app=app, host='0.0.0.0', port=5000, log_level="info")
