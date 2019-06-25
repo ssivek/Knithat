@@ -121,8 +121,8 @@ async def analyze(request):
     patt_lst = [patt_1, patt_2, patt_3] # list of dicts of patterns
     patt_recs = json.dumps(patt_lst)
 
-    return render_template('pattern-search.html', JSONResponse({'patt_recs': patt_recs})
+    return render_template('pattern-search.html', JSONResponse({'patt_recs': patt_recs}))
 
-if __name__ == '__main__':
-    if 'serve' in sys.argv:
+if __name__ == "__main__":
+    if "serve" in sys.argv:
         uvicorn.run(app=app, host='0.0.0.0', port=5000, log_level="info")
