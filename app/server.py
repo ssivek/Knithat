@@ -72,9 +72,7 @@ async def analyze(request):
     prediction = learn.predict(img)
     json_data = get_api_call(prediction)
     patt_recs = extract_pattern_info(json_data)
-    print(patt_recs)
     return JSONResponse({'result': patt_recs})
-
 
 
 def get_api_call(prediction):
@@ -128,6 +126,8 @@ def extract_pattern_info(json_data):
     patt_3 = {'info': p_info_3, 'link': p_link_3, 'photo': p_photo_3, 'free': p_free_3}
     patt_lst = [patt_1, patt_2, patt_3] # list of dicts of patterns
     patt_recs = json.dumps(patt_lst)
+    
+    return patt_recs
 
 
 if __name__ == '__main__':
