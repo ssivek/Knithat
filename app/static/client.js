@@ -29,8 +29,10 @@ function analyze() {
   xhr.onload = function(e) {
     if (this.readyState === 4) {
         var response = JSON.parse(e.target.responseText);
+        var firstPatt = Object.keys(response)[0];
         el('result-label').innerHTML = `
         Result in ugly format: <br>${response['result']}
+        <br>How about this new var firstPatt; what does it do? ${firstPatt.info}
         <br>Try for a pattern name:  ${response['result'][0].info}
         <br>And a link:  ${response['result'][0].link}
         <br>And a photo URL: ${response['result'][0].photo}
