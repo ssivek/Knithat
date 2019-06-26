@@ -29,10 +29,18 @@ function analyze() {
   xhr.onload = function(e) {
     if (this.readyState === 4) {
         var response = JSON.parse(e.target.responseText);
-        document.getElementById("hat_1_image_source") = response["p1_photo"];
-        document.getElementById("hat_1_link") = response["p1_link"];
-        document.getElementById("hat_1_info") = response["p1_info"];
-        document.getElementById("hat_1_free") = response["p1_free"];
+        
+        el('result-1-info').innerHTML = `
+          <br>${response['hat_1_info']}
+          `;
+        el("result-1-url").setAttribute('href', response["hat_1_link"]);
+        el('result-1-free').innerHTML = `
+          <br>$$$: ${response['hat_1_free']}`;
+        
+        el('all-result').innerHTML = `            
+          Your first pattern recommendation is ${response['hat_1_info']}
+          <br>You can find it at: ${response['hat_1_link']}
+          `;
     }
     el('analyze-button').innerHTML = 'Analyze';
 };
