@@ -30,18 +30,15 @@ function analyze() {
     if (this.readyState === 4) {
         var response = JSON.parse(e.target.responseText);
         
-        el('result-1-info').innerHTML = `
-          <br>${response['hat_1_info']}
-          `;
-        el("result-1-url").setAttribute('href', response["hat_1_link"]);
-        el('result-1-free').innerHTML = `
-          <br>$$$: ${response['hat_1_free']}`;
+        el('result-1-info').innerHTML = `<br>${response['hat_1_info']}`
+        el("result-1-url").setAttribute('href', response["hat_1_link"])
+        el('result-1-free').innerHTML = `<br>$$$: ${response['hat_1_free']}`
         
         el('all-result').innerHTML = `            
           Your first pattern recommendation is ${response['hat_1_info']}
-          <br>You can find it at: ${response['hat_1_link']}
-          `;
+          <br>You can find it at: ${response['hat_1_link']}`;
     }
+
     el('analyze-button').innerHTML = 'Analyze';
 };
 
@@ -49,4 +46,3 @@ function analyze() {
   fileData.append("file", uploadFiles[0]);
   xhr.send(fileData);
 }
-
