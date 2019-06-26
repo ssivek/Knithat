@@ -28,14 +28,13 @@ function analyze() {
   };
   xhr.onload = function(e) {
     if (this.readyState === 4) {
-        
-        var jsonPretty = JSON.stringify(JSON.parse(e.target.responseText),null,2);
+        var response = JSON.parse(e.target.responseText);
         el('result-label').innerHTML = `
-          Result in ugly format: <br>${jsonPretty['result']}
+          Result in ugly format: <br>${response['result']}
           <br>
           OLD EFFORTS THAT DON'T WORK:
           <br>Try for a pattern name:  ${response['result'][0].info}
-          <br>And a link:  ${response['result'][0].link}
+          <br>And a link BUT WITH JUST INDEXING NO NAMES:  ${response['result'][0][0]}
           <br>And a photo URL: ${response['result'][0].photo}
           <br>And a free indicator: ${response['result'][0].free}
           <br>Happy knitting!<br>
