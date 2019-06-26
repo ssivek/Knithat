@@ -71,8 +71,10 @@ async def analyze(request):
     img = open_image(BytesIO(img_bytes))
     prediction = learn.predict(img)
     json_data = get_api_call(prediction)
-    #patt_recs = extract_pattern_info(json_data)
-    return JSONResponse({'result': json_data})
+    p1 = extract_pattern_1_info(json_data)
+    p2 = extract_pattern_2_info(json_data)
+    p3 = extract_pattern_3_info(json_data)
+    return JSONResponse({'pattern1': p1, 'pattern2': p2, 'pattern3': p3})
 
 
 def get_api_call(prediction):
@@ -91,10 +93,9 @@ def get_api_call(prediction):
     response = rq.get(api_url, auth=(user, pswd))
     json_data = response.json()
     return json_data
-""" 
 
-def extract_pattern_info(json_data):
-    # info on first search result
+
+def extract_pattern_1_info(json_data): # info on first search result
     p_info_1 = json_data['patterns'][0]['name'] + ' by ' + json_data['patterns'][0]['pattern_author']['name']
     p_link_1 = 'https://www.ravelry.com/patterns/library/' + json_data['patterns'][0]['permalink']
     p_photo_1 = json_data['patterns'][0]['first_photo']['square_url']
@@ -102,8 +103,11 @@ def extract_pattern_info(json_data):
         p_free_1 = 'Free pattern? Yes'
     else:   
         p_free_1 = 'Free pattern? No'
+    pattern_1 = (p_info_1, p_link_1, p_photo_1, p_free_1)
+    return pattern_1
 
-    #info on second search result
+
+def extract_pattern_2_info(json_data): #info on second search result
     p_info_2 = json_data['patterns'][1]['name'] + ' by ' + json_data['patterns'][1]['pattern_author']['name']
     p_link_2 = 'https://www.ravelry.com/patterns/library/' + json_data['patterns'][1]['permalink']
     p_photo_2 = json_data['patterns'][1]['first_photo']['square_url']
@@ -111,8 +115,11 @@ def extract_pattern_info(json_data):
         p_free_2 = 'Free pattern? Yes'
     else:   
         p_free_2 = 'Free pattern? No'
+    pattern_2 = (p_info_2, p_link_2, p_photo_2, p_free_2)
+    return pattern_2
 
-    # info on third search result
+
+def extract_pattern_3_info(json_data): # info on third search result
     p_info_3 = json_data['patterns'][2]['name'] + ' by ' + json_data['patterns'][2]['pattern_author']['name']
     p_link_3 = 'https://www.ravelry.com/patterns/library/' + json_data['patterns'][2]['permalink']
     p_photo_3 = json_data['patterns'][2]['first_photo']['square_url']
@@ -120,35 +127,9 @@ def extract_pattern_info(json_data):
         p_free_3 = 'Free pattern? Yes'
     else:   
         p_free_3 = 'Free pattern? No'
-    
-    patt_dict = {}
-    patt_dict['patt_1'] = {}
-    patt_dict['patt_1']['info'] = p_info_1
-    patt_dict['patt_1']['link'] = p_link_1
-    patt_dict['patt_1']['photo'] = p_photo_1
-    patt_dict['patt_1']['free'] = p_free_1
+    pattern_3 = (p_info_3, p_link_3, p_photo_3, p_free_3)
+    return pattern_3
 
-    patt_dict['patt_2'] = {}
-    patt_dict['patt_2']['info'] = p_info_2
-    patt_dict['patt_2']['link'] = p_link_2
-    patt_dict['patt_2']['photo'] = p_photo_2
-    patt_dict['patt_2']['free'] = p_free_2
-
-    patt_dict['patt_3'] = {}
-    patt_dict['patt_3']['info'] = p_info_3
-    patt_dict['patt_3']['link'] = p_link_3
-    patt_dict['patt_3']['photo'] = p_photo_3
-    patt_dict['patt_3']['free'] = p_free_3
-
-    #patt_1 = {'info': p_info_1, 'link': p_link_1, 'photo': p_photo_1, 'free': p_free_1} # dictionary for each of top 3 patterns
-    #patt_2 = {'info': p_info_2, 'link': p_link_2, 'photo': p_photo_2, 'free': p_free_2}
-    #patt_3 = {'info': p_info_3, 'link': p_link_3, 'photo': p_photo_3, 'free': p_free_3}
-    #patt_lst = [patt_1, patt_2, patt_3] # list of dicts of patterns
-    #patt_recs = json.dumps(patt_lst) 
-    patt_recs = json.dumps(patt_dict) 
-    
-    return patt_recs
- """
 
 if __name__ == '__main__':
     if 'serve' in sys.argv:
