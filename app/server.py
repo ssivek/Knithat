@@ -121,6 +121,7 @@ def get_api_call(prediction):
 
 
 def extract_pattern_1_info(json_data): # info on first search result
+    pattern_1 = []
     p_info_1 = json_data['patterns'][0]['name'] + ' by ' + json_data['patterns'][0]['pattern_author']['name']
     p_link_1 = 'https://www.ravelry.com/patterns/library/' + json_data['patterns'][0]['permalink']
     p_photo_1 = json_data['patterns'][0]['first_photo']['square_url']
@@ -128,7 +129,7 @@ def extract_pattern_1_info(json_data): # info on first search result
         p_free_1 = 'Free pattern? Yes'
     else:   
         p_free_1 = 'Free pattern? No'
-    pattern_1 = (p_info_1, p_link_1, p_photo_1, p_free_1)
+    pattern1.append(p_info_1, p_link_1, p_photo_1, p_free_1)
     return pattern_1
 
 
