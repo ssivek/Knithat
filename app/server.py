@@ -129,7 +129,10 @@ def extract_pattern_1_info(json_data): # info on first search result
         p_free_1 = 'Free pattern? Yes'
     else:   
         p_free_1 = 'Free pattern? No'
-    pattern_1.append(p_info_1, p_link_1, p_photo_1, p_free_1)
+    pattern_1.append(p_info_1)
+    pattern_1.append(p_link_1)
+    pattern_1.append(p_photo_1)
+    pattern_1.append(p_free_1)
     return pattern_1
 
 
@@ -142,7 +145,10 @@ def extract_pattern_2_info(json_data): #info on second search result
         p_free_2 = 'Free pattern? Yes'
     else:   
         p_free_2 = 'Free pattern? No'
-    pattern_2.append(p_info_2, p_link_2, p_photo_2, p_free_2)
+    pattern_2.append(p_info_2)
+    pattern_2.append(p_link_2)
+    pattern_2.append(p_photo_2)
+    pattern_2.append(p_free_2)    
     return pattern_2
 
 
@@ -155,7 +161,10 @@ def extract_pattern_3_info(json_data): # info on third search result
         p_free_3 = 'Free pattern? Yes'
     else:   
         p_free_3 = 'Free pattern? No'
-    pattern_3.append(p_info_3, p_link_3, p_photo_3, p_free_3)
+    pattern_3.append(p_info_3)
+    pattern_3.append(p_link_3)
+    pattern_3.append(p_photo_3)
+    pattern_3.append(p_free_3)    
     return pattern_3
 
 
