@@ -126,9 +126,9 @@ def extract_pattern_1_info(json_data): # info on first search result
     p_link_1 = 'https://www.ravelry.com/patterns/library/' + json_data['patterns'][0]['permalink']
     p_photo_1 = json_data['patterns'][0]['first_photo']['square_url']
     if json_data['patterns'][0]['free'] == True:
-        p_free_1 = 'Free pattern? Yes'
+        p_free_1 = 'Yes'
     else:   
-        p_free_1 = 'Free pattern? No'
+        p_free_1 = 'No'
     pattern_1.append(p_info_1)
     pattern_1.append(p_link_1)
     pattern_1.append(p_photo_1)
@@ -142,9 +142,9 @@ def extract_pattern_2_info(json_data): #info on second search result
     p_link_2 = 'https://www.ravelry.com/patterns/library/' + json_data['patterns'][1]['permalink']
     p_photo_2 = json_data['patterns'][1]['first_photo']['square_url']
     if json_data['patterns'][1]['free'] == True:
-        p_free_2 = 'Free pattern? Yes'
+        p_free_2 = 'Yes'
     else:   
-        p_free_2 = 'Free pattern? No'
+        p_free_2 = 'No'
     pattern_2.append(p_info_2)
     pattern_2.append(p_link_2)
     pattern_2.append(p_photo_2)
@@ -158,9 +158,9 @@ def extract_pattern_3_info(json_data): # info on third search result
     p_link_3 = 'https://www.ravelry.com/patterns/library/' + json_data['patterns'][2]['permalink']
     p_photo_3 = json_data['patterns'][2]['first_photo']['square_url']
     if json_data['patterns'][2]['free'] == True:
-        p_free_3 = 'Free pattern? Yes'
+        p_free_3 = 'Yes'
     else:   
-        p_free_3 = 'Free pattern? No'
+        p_free_3 = 'No'
     pattern_3.append(p_info_3)
     pattern_3.append(p_link_3)
     pattern_3.append(p_photo_3)
