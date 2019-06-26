@@ -29,10 +29,11 @@ function analyze() {
   xhr.onload = function(e) {
     if (this.readyState === 4) {
         var response = JSON.parse(e.target.responseText);
-        var patt_1_info = response.patt_1.info
+        var patt_1 = response.patt_1;
         el('result-label').innerHTML = `
           Result in ugly format: <br>${response['result']}
-          <br>Let's try just printing that: ${patt_1_info}
+          <br>Let's try just printing that: ${patt_1}
+          <br>How about just the info with the dot: ${patt_1.info}
           <br>
           OLD EFFORTS THAT DON'T WORK:
           <br>Try for a pattern name:  ${response['result'][0].info}
