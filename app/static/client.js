@@ -29,21 +29,12 @@ function analyze() {
   xhr.onload = function(e) {
     if (this.readyState === 4) {
         var response = JSON.parse(e.target.responseText);
-        var patt_1 = response.patt_1;
         el('result-label').innerHTML = `
-          Result in ugly format: <br>${response['result']}
-          <br>Let's try just printing that: ${patt_1}
-          <br>How about just the info with the dot: ${patt_1.info}
-          <br>
-          OLD EFFORTS THAT DON'T WORK:
-          <br>Try for a pattern name:  ${response['result'][0].info}
-          <br>Try for a pattern name:  ${response['result'][0].info}
-          <br>Try for a pattern name OR MAYBE LIKE THIS:  ${response['result']['patt_1'].info}
-          <br>And a pattern name BUT WITH JUST INDEXING NO NAMES:  ${response['result'][0][0]}
-          <br>And a pattern name BUT WITH JUST NAMES:  ${response['result']['patt_1']['info']}
-          <br>And a photo URL: ${response['result'][0].photo}
-          <br>And a free indicator: ${response['result'][0].free}
-          <br>Happy knitting!<br>
+            Result in ugly format: <br>${response['result']}
+            <br>And a photo URL: ${response['result'][0].photo}
+            <br>Or maybe with indexing instead of key: ${response['result'][0][1]}
+            <br>And a free indicator: ${response['result'][0].free}
+            <br>Happy knitting!<br>
         `;
     }
     el('analyze-button').innerHTML = 'Analyze';
