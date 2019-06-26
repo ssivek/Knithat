@@ -121,12 +121,31 @@ def extract_pattern_info(json_data):
     else:   
         p_free_3 = 'Free pattern? No'
     
-    
-    patt_1 = {'info': p_info_1, 'link': p_link_1, 'photo': p_photo_1, 'free': p_free_1} # dictionary for each of top 3 patterns
-    patt_2 = {'info': p_info_2, 'link': p_link_2, 'photo': p_photo_2, 'free': p_free_2}
-    patt_3 = {'info': p_info_3, 'link': p_link_3, 'photo': p_photo_3, 'free': p_free_3}
-    patt_lst = {patt_1, patt_2, patt_3} # list of dicts of patterns CHANGED TO DICT OF DICTS
-    patt_recs = json.dumps(patt_lst) 
+    patt_dict = {}
+    patt_dict['patt_1'] = {}
+    patt_dict['patt_1']['info'] = p_info_1
+    patt_dict['patt_1']['link'] = p_link_1
+    patt_dict['patt_1']['photo'] = p_photo_1
+    patt_dict['patt_1']['free'] = p_free_1
+
+    patt_dict['patt_2'] = {}
+    patt_dict['patt_2']['info'] = p_info_2
+    patt_dict['patt_2']['link'] = p_link_2
+    patt_dict['patt_2']['photo'] = p_photo_2
+    patt_dict['patt_2']['free'] = p_free_2
+
+    patt_dict['patt_3'] = {}
+    patt_dict['patt_3']['info'] = p_info_3
+    patt_dict['patt_3']['link'] = p_link_3
+    patt_dict['patt_3']['photo'] = p_photo_3
+    patt_dict['patt_3']['free'] = p_free_3
+
+    #patt_1 = {'info': p_info_1, 'link': p_link_1, 'photo': p_photo_1, 'free': p_free_1} # dictionary for each of top 3 patterns
+    #patt_2 = {'info': p_info_2, 'link': p_link_2, 'photo': p_photo_2, 'free': p_free_2}
+    #patt_3 = {'info': p_info_3, 'link': p_link_3, 'photo': p_photo_3, 'free': p_free_3}
+    #patt_lst = [patt_1, patt_2, patt_3] # list of dicts of patterns
+    #patt_recs = json.dumps(patt_lst) 
+    patt_recs = json.dumps(patt_dict) 
     
     return patt_recs
 
