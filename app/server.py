@@ -72,9 +72,34 @@ async def analyze(request):
     prediction = learn.predict(img)
     json_data = get_api_call(prediction)
     p1 = extract_pattern_1_info(json_data)
+        p1_info = p1[0]
+        p1_link = p1[1]
+        p1_photo = p1[2]
+        p1_free = p1[3]
     p2 = extract_pattern_2_info(json_data)
+        p2_info = p2[0]
+        p2_link = p2[1]
+        p2_photo = p2[2]
+        p2_free = p2[3]
     p3 = extract_pattern_3_info(json_data)
-    return JSONResponse({'pattern1': p1, 'pattern2': p2, 'pattern3': p3})
+        p3_info = p3[0]
+        p3_link = p3[1]
+        p3_photo = p3[2]
+        p3_free = p3[3]
+    return JSONResponse({
+        'hat_1_info' : p1_info,
+        'hat_1_link' : p1_link,
+        'hat_1_photo' : p1_photo,
+        'hat_1_free' : p1_free,
+        'hat_2_info' : p2_info,
+        'hat_2_link' : p2_link,
+        'hat_2_photo' : p2_photo,
+        'hat_2_free' : p2_free,
+        'hat_3_info' : p3_info,
+        'hat_3_link' : p3_link,
+        'hat_3_photo' : p3_photo,
+        'hat_3_free' : p3_free
+        })
 
 
 def get_api_call(prediction):
