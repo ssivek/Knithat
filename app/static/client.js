@@ -30,9 +30,10 @@ function analyze() {
     if (this.readyState === 4) {
         var response = JSON.parse(e.target.responseText);
         el('result-label').innerHTML = `
-            Your first pattern recommendation is (ugly format): <br>${response['pattern1']}
-            And maybe you can see just the info: ${response['pattern1']['p_info_1']}
-            And maybe you can see just the link: ${response['pattern1']['p_link_1']}
+            Your first pattern recommendation is ${response['hat_1_info']}
+            <br>You can find it at: ${response['hat_1_link']}
+            <br>The photo is at: ${response['hat_1_photo']}
+            <br>And the freeness is: ${response['hat_1_free']}
             <br>Happy knitting!<br>
         `;
     }
