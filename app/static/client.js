@@ -28,9 +28,14 @@ function analyze() {
   };
   xhr.onload = function(e) {
     if (this.readyState === 4) {
-        var response = e.target.responseText;
+        const response = JSON.parse(e.target.responseText);
+        const patt1 = response.slice(0);
+        const patt2 = response.slice(1);
+        const patt3 = response.slice(2)
         el('result-label').innerHTML = `
           Result in ugly format: <br>${response['result']}
+          <what about const and slice? get pattern 1 info ${patt1.info}
+          OLD EFFORTS THAT DON'T WORK:
           <br>Try for a pattern name:  ${response['result'][0].info}
           <br>And a link:  ${response['result'][0].link}
           <br>And a photo URL: ${response['result'][0].photo}
