@@ -30,10 +30,9 @@ function analyze() {
     if (this.readyState === 4) {
         var response = JSON.parse(e.target.responseText);
         el('result-label').innerHTML = `
-            Result in ugly format: <br>${response['result']}
-            <br>And a photo URL: ${response['result'][0].photo}
-            <br>Or maybe with indexing instead of key: ${response['result'][0][1]}
-            <br>And a free indicator: ${response['result'][0].free}
+            Your first pattern recommendation is (ugly format): <br>${response['pattern1']}
+            And maybe you can see just the info: ${response['pattern1']['p_info_1']}
+            And maybe you can see just the link: ${response['pattern1']['p_link_1']}
             <br>Happy knitting!<br>
         `;
     }
