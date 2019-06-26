@@ -71,8 +71,8 @@ async def analyze(request):
     img = open_image(BytesIO(img_bytes))
     prediction = learn.predict(img)
     json_data = get_api_call(prediction)
-    patt_recs = extract_pattern_info(json_data)
-    return JSONResponse({'result': patt_recs})
+    #patt_recs = extract_pattern_info(json_data)
+    return JSONResponse({'result': json_data})
 
 
 def get_api_call(prediction):
@@ -91,7 +91,7 @@ def get_api_call(prediction):
     response = rq.get(api_url, auth=(user, pswd))
     json_data = response.json()
     return json_data
-
+""" 
 
 def extract_pattern_info(json_data):
     # info on first search result
@@ -148,7 +148,7 @@ def extract_pattern_info(json_data):
     patt_recs = json.dumps(patt_dict) 
     
     return patt_recs
-
+ """
 
 if __name__ == '__main__':
     if 'serve' in sys.argv:
