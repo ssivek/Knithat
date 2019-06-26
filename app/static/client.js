@@ -29,10 +29,13 @@ function analyze() {
   xhr.onload = function(e) {
     if (this.readyState === 4) {
         var response = JSON.parse(e.target.responseText);
+        var patt_1_info = response.patt_1.info
         el('result-label').innerHTML = `
           Result in ugly format: <br>${response['result']}
+          <br>Let's try just printing that: ${patt_1_info}
           <br>
           OLD EFFORTS THAT DON'T WORK:
+          <br>Try for a pattern name:  ${response['result'][0].info}
           <br>Try for a pattern name:  ${response['result'][0].info}
           <br>Try for a pattern name OR MAYBE LIKE THIS:  ${response['result']['patt_1'].info}
           <br>And a pattern name BUT WITH JUST INDEXING NO NAMES:  ${response['result'][0][0]}
