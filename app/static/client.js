@@ -38,6 +38,7 @@ function analyze() {
       el('result-3-photo').innerHTML = `<br><img src='${response['hat_3_photo']}'>`;
       el('result-3-url').innerHTML = `<br><a href="${response['hat_3_link']}">${response['hat_3_info']}</a>`;
       el('result-3-free').innerHTML = `<br>Free pattern? ${response['hat_3_free']}`;
+      el('custom_search_url').innerHTML = `<br>Not what you're looking for? <br><a href="${response['custom_search_url']}">These custom Ravelry results</a> might help.`
     }
     el('analyze-button').innerHTML = 'Analyze';
 };
