@@ -179,7 +179,7 @@ def make_custom_search(prediction): # make custom search string
     f = e[0].split(';') # splits item(s) on the semicolon into a new list ['ribbed', 'cables']
     pattern_attributes = '%2B'.join(f) # constructs string from pattern attributes in e, joining with '%2B' for Ravelry search
     search_url = 'https://www.ravelry.com/patterns/search#craft=knitting&photo=yes&pc=hat&sort=best&view=captioned_thumbs&ratings=5&pa='
-    url_all =  search_url + custom_search # concatenates start of search URL with custom attributes joined as string
+    url_all =  search_url + pattern_attributes # concatenates start of search URL with custom attributes joined as string
     return url_all
    
 if __name__ == '__main__':
