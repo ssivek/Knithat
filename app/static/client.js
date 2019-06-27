@@ -28,22 +28,16 @@ function analyze() {
   };
   xhr.onload = function(e) {
     if (this.readyState === 4) {
-        var response = JSON.parse(e.target.responseText);
-
-        el('result-1-url').setAttribute('href', response['hat_1_link']);
-
-        el('result-1-photo').innerHTML = `<img src='${response['hat_1_photo']}'>`;
-        el('result-1-info').innerHTML = `${response['hat_1_info']}`;
-        el('result-1-plainlink').innerHTML = `Ugly link: ${response['hat_1_link']}`;
-        el('result-1-free').innerHTML = `Free pattern? ${response['hat_1_free']}`;
-        
-        el('all-result').innerHTML = `            
-          Your first pattern recommendation is ${response['hat_1_info']}
-          You can find it at: ${response['hat_1_link']}`;
-
-
+      var response = JSON.parse(e.target.responseText);
+      el('result-1-photo').innerHTML = `<img src='${response['hat_1_photo']}'>`;
+      el('result-1-info').innerHTML = `${response['hat_1_info']}`;
+      el('result-1-plainlink').innerHTML = `Ugly link: ${response['hat_1_link']}`;
+      el('result-1-free').innerHTML = `Free pattern? ${response['hat_1_free']}`;
+      el('all-result').innerHTML = `
+      <br>Your first pattern recommendation is ${response['hat_1_info']}
+      <br>You can find it at: ${response['hat_1_link']}`;
+      el('result-1-url').setAttribute('href', response['hat_1_link']);
     }
-
     el('analyze-button').innerHTML = 'Analyze';
 };
 
