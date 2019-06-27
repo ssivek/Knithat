@@ -30,8 +30,14 @@ function analyze() {
     if (this.readyState === 4) {
       var response = JSON.parse(e.target.responseText);
       el('result-1-photo').innerHTML = `<img src='${response['hat_1_photo']}'>`;
-      el('result-url').innerHTML = `<br><a href="${response['hat_1_link']}">${response['hat_1_info']}</a>`;
+      el('result-1-url').innerHTML = `<br><a href="${response['hat_1_link']}">${response['hat_1_info']}</a>`;
       el('result-1-free').innerHTML = `<br>Free pattern? ${response['hat_1_free']}`;
+      el('result-2-photo').innerHTML = `<br><img src='${response['hat_2_photo']}'>`;
+      el('result-2-url').innerHTML = `<br><a href="${response['hat_2_link']}">${response['hat_2_info']}</a>`;
+      el('result-2-free').innerHTML = `<br>Free pattern? ${response['hat_2_free']}`;
+      el('result-3-photo').innerHTML = `<br><img src='${response['hat_3_photo']}'>`;
+      el('result-3-url').innerHTML = `<br><a href="${response['hat_3_link']}">${response['hat_3_info']}</a>`;
+      el('result-3-free').innerHTML = `<br>Free pattern? ${response['hat_3_free']}`;
     }
     el('analyze-button').innerHTML = 'Analyze';
 };
