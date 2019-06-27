@@ -30,9 +30,7 @@ function analyze() {
     if (this.readyState === 4) {
       var response = JSON.parse(e.target.responseText);
       el('result-1-photo').innerHTML = `<img src='${response['hat_1_photo']}'>`;
-      el('result-1-info').innerHTML = `<br>${response['hat_1_info']}`;
       el('result-url').innerHTML = `<br><a href="${response['hat_1_link']}">${response['hat_1_info']}</a>`;
-      el('result-1-plainlink').innerHTML = `<br>Ugly link: ${response['hat_1_link']}`;
       el('result-1-free').innerHTML = `<br>Free pattern? ${response['hat_1_free']}`;
     }
     el('analyze-button').innerHTML = 'Analyze';
