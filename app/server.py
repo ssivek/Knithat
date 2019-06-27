@@ -71,6 +71,7 @@ async def analyze(request):
     img = open_image(BytesIO(img_bytes))
     prediction = learn.predict(img)
     json_data = get_api_call(prediction)
+    custom_search_url = make_custom_search(prediction)
     p1 = extract_pattern_1_info(json_data)
     p1_info = p1[0]
     p1_link = p1[1]
@@ -98,7 +99,8 @@ async def analyze(request):
         'hat_3_info' : p3_info,
         'hat_3_link' : p3_link,
         'hat_3_photo' : p3_photo,
-        'hat_3_free' : p3_free
+        'hat_3_free' : p3_free,
+        'custom_search_url' : custom_search_url
         })
 
 
@@ -167,7 +169,19 @@ def extract_pattern_3_info(json_data): # info on third search result
     pattern_3.append(p_free_3)    
     return pattern_3
 
-
+def make_custom_search(prediction): # make custom search string
+    # transform prediction into custom Raverly search using detected pattern attributes
+    a = str(prediction) # makes list from prediction into a string
+    b = a.split(',') # splits string on the commas
+    c = b[0] # extracts first item out of string "(MultiCategory ribbed;cables, ..."
+    d = c.split(' ') # splits item(s) on the space (Multicategory, ribbed;cables)
+    e = d[1:] # extracts the second and all following items, which are pattern attributes, as a list with one item ['ribbed;cables']
+    f = e[0].split(';') # splits item(s) on the semicolon into a new list ['ribbed', 'cables']
+    pattern_attributes = '%2B'.join(f) # constructs string from pattern attributes in e, joining with '%2B' for Ravelry search
+    search_url = 'https://www.ravelry.com/patterns/search#craft=knitting&photo=yes&pc=hat&sort=best&view=captioned_thumbs&ratings=5&pa='
+    url_all =  search_url + custom_search # concatenates start of search URL with custom attributes joined as string
+    return url_all
+   
 if __name__ == '__main__':
     if 'serve' in sys.argv:
         uvicorn.run(app=app, host='0.0.0.0', port=5000, log_level="info")
