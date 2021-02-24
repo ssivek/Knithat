@@ -4,4 +4,4 @@ A knitter's dilemma: That's a cute knitted hat in the store, but if you buy a re
 
 Want to find the pattern and make it yourself? Snap a photo and let KnitHAT find you some top-rated patterns on Ravelry that (may) match!
 
-KnitHAT is based on a CNN trained on resnet50 using fast.ai. The webapp is hosted on [Render](https://knithat.onrender.com/).
+KnitHAT is based on a CNN trained on resnet50 using fast.ai. The webapp was hosted on Render.
